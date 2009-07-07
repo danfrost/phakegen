@@ -1,2 +1,22 @@
-Code generation
+Next:
+
+1.	Clean up the output - it's completely messy and confusing
+
+2.	Create a "templates" directory in phaker - somewhere that the 'phakegen' module can install all its templates. E.g.
+	PHAKE_ROOT:/usr/.../phakegen/[install here]
+	
+	Then, pull all the available templates from this directory. Display them using:
+		phake gen list
+
+3.	Allow the user to add their own phake templates - e.g. $PHAKE_TEMPLATES_DIR. 
+	List these separately in 'phake gen list'
+
+4.	Remember the variables that were captured - this just means using "echo Phake_Vars::get('testvar');". 
+	Should do:
+	$input = new Johnny5_InputValue('blarblar')
+	>>
+		Phake_Vars::get('blarblar');
+		>>
+			readline / get from cache
+
 

@@ -10,7 +10,6 @@ class Johnny5_ContentParser {
 	 */
 	function __construct($file) {
 		$this->___file = $file;
-		
 	}
 	
 	/**
@@ -40,7 +39,7 @@ class Johnny5_ContentParser {
 		//$ret = J5_Input::get($var);
 		$got_value = false;
 		while($got_value==false) {
-		    $ret = readline($var);
+		    $ret = Phake_Vars::get($var);//readline($var);
 		    if(trim($ret)!='?') {
 			    $got_value=true;
 			    $value = new Johnny5_InputValue($var, $ret);

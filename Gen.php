@@ -18,8 +18,11 @@ class Phake_Script_Gen extends Phake_Script
         
         //echo Phake_Vars::get('anothervar');
         
-        $j5file = new Johnny5_File('testfile', $GLOBALS['_ENV']['PWD'].'/source/', $GLOBALS['_ENV']['PWD'].'/target/');
-        $j5file->generate();
+        $j5 = new Johnny5($GLOBALS['_ENV']['PWD'].'/source/', $GLOBALS['_ENV']['PWD'].'/target/');
+        $j5->generate();
+        
+        //$j5file = new Johnny5_File('testfile', $GLOBALS['_ENV']['PWD'].'/source/', $GLOBALS['_ENV']['PWD'].'/target/');
+        //$j5file->generate();
         
         Phake_Vars::save();
         /*
