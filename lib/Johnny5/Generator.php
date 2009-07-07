@@ -31,11 +31,16 @@ abstract class Johnny5_Generator
     
     /**
      */
-    function __construct($source, $target, $name){
+    function __construct($source, $target, $name=null){
         //echo PHP_EOL . "s/t = $source | $target | $name ";
-        $this->source   = $source . '/' . $name;
-        $this->target   = $target . '/' . $name;
-        $this->name     = $name;
+        if(trim($name)) {
+            $this->source   = $source . '/' . $name;
+            $this->target   = $target . '/' . $name;
+            $this->name     = $name;
+        } else {
+            $this->source   = $source;
+            $this->target   = $target;
+        }
         $this->collectSubItems();
     }
     
@@ -47,22 +52,28 @@ abstract class Johnny5_Generator
         // ?? Not sure if capitals is the best way to identify variables. Perhaps a prefix like '@' or '$'
         preg_match_all("_([A-Z0-9]{2,100})_", $dir, $arr);
         
+        $reservedVars = array(
+            'README', 'INSTALL', 'CHANGELOG'
+            );
+        
         if($arr[0]) {
             foreach($arr[0] as $var) {
-                echo PHP_EOL . 'File '.$dir;
+                if(!in_array($var, $reservedVars)) {
+                    echo PHP_EOL . 'File '.$dir;
                 
-                $got_value = false;
-        		while($got_value==false) {
-        		    $ret = Phake_Vars::get($var);
-        		    if(trim($ret)!='?') {
-        			    $got_value=true;
-        			    $value = new Johnny5_InputValue($var, $ret);
-        		    } else {
-        		        echo "Dir.";
-        		    }
-        		}
+                    $got_value = false;
+            		while($got_value==false) {
+            		    $ret = Phake_Vars::get(strtolower($var));
+            		    if(trim($ret)!='?') {
+            			    $got_value=true;
+            			    $value = new Johnny5_InputValue($var, $ret);
+            		    } else {
+            		        echo "Dir.";
+            		    }
+            		}
         		
-        		$dir = str_replace($var, $value, $dir);
+            		$dir = str_replace($var, $value, $dir);
+        		}
             }
         }
         return $dir;
@@ -84,7 +95,7 @@ abstract class Johnny5_Generator
             $sub = "";
             $trail = '';
         }
-        $base = basename($this->source);
+        $base = red(basename($this->source));
         return "$base$trail $sub";
     }
     
