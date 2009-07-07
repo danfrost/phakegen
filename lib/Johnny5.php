@@ -12,16 +12,16 @@ class Johnny5
     private $source;
     private $target;
     
-    public function __construct($source, $target)
+    public function __construct($source, $target, $name)
     {
         $this->source = $source;
         $this->target = $target;
+        $this->name   = $name;
     }
     
     public function generate()
     {
-        $j5dir = new Johnny5_Directory($this->source, $this->target);
-        $j5dir->preGenerate();
+        
     }
 }
 

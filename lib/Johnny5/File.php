@@ -1,17 +1,9 @@
 <?php
 
-class Johnny5_File
+class Johnny5_File extends Johnny5_Generator
 {
-    private $source   = null;
-    private $target   = null;
-    
-    function __construct($file, $source, $target)
-    {
-        echo PHP_EOL . "Generating '$source$file' => '$target$file'";
-        $this->source = f($source . $file);
-        //$this->target = f($target . $file);
-        $this->setTarget($target . $file);
-        $this->target->touch();
+    function collectSubItems() {
+        
     }
     
     private function setTarget($dir)
@@ -40,8 +32,10 @@ class Johnny5_File
         $this->target = f($dir);
     }
     
-    function generate()
+    function generateItem()
     {
+        $this->source = f($this->source);
+        $this->target = f($this->target);
         $this->copyToTarget();
         $this->parse();
     }

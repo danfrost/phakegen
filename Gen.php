@@ -10,37 +10,22 @@ class Phake_Script_Gen extends Phake_Script
         phake('help gen');
     }
     
-    function test()
+    function test($pretend=false)
     {   
         Phake_Vars::load();
         
-        //echo Phake_Vars::get('testvar');
+        $source = $GLOBALS['_ENV']['PWD'].'/source/';
+        $target = $GLOBALS['_ENV']['PWD'].'/target/';
+        $name = 'template';
         
-        //echo Phake_Vars::get('anothervar');
+        if($pretend) {
+            Johnny5_Generator::$pretend = true;
+        }
         
-        $j5 = new Johnny5($GLOBALS['_ENV']['PWD'].'/source/', $GLOBALS['_ENV']['PWD'].'/target/');
-        $j5->generate();
-        
-        //$j5file = new Johnny5_File('testfile', $GLOBALS['_ENV']['PWD'].'/source/', $GLOBALS['_ENV']['PWD'].'/target/');
-        //$j5file->generate();
+        $j5dir = new Johnny5_Directory($source, $target, $name);
+        $j5dir->generate();
         
         Phake_Vars::save();
-        /*
-        if ($db = new SQLiteDatabase('filename')) {
-            $q = @$db->query('SELECT requests FROM tablename WHERE id = 1');
-            if ($q === false) {
-                $db->queryExec('CREATE TABLE tablename (id int, requests int, PRIMARY KEY (id)); INSERT INTO tablename VALUES (1,1)');
-                $hits = 1;
-            } else {
-                $result = $q->fetchSingle();
-                $hits = $result+1;
-            }
-            $db->queryExec("UPDATE tablename SET requests = '$hits' WHERE id = 1");
-        } else {
-            die($err);
-        }
-        echo $db->queryExec("SELECT * from tablename");
-        */
     }
     
     
