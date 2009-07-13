@@ -13,8 +13,12 @@ class Phake_Script_Gen extends Phake_Script
             Phake_Vars::load();
             
             $templateDir = dirname(__FILE__). '/templates/';
-
-            $source = $templateDir."/$template/";
+            
+            if(substr($template, 0, 1)=='/') {
+                $source = $template;
+            } else {
+                $source = $templateDir."/$template/";
+            }
             $target = substr($target, 0, 1)=='/' ? $target : $GLOBALS['_ENV']['PWD'].'/'.$target;
             
             echo "\nSource : $source\nTarget : $target\nName : $name\n";
